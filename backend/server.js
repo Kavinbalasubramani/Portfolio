@@ -9,14 +9,14 @@ const { syncModels } = require('./models');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 // ── Route imports ──────────────────────────────────────────────────────────────
-const authRoutes       = require('./routes/authRoutes');
-const profileRoutes    = require('./routes/profileRoutes');
-const skillRoutes      = require('./routes/skillRoutes');
-const projectRoutes    = require('./routes/projectRoutes');
+const authRoutes = require('./routes/authRoutes');
+const profileRoutes = require('./routes/profileRoutes');
+const skillRoutes = require('./routes/skillRoutes');
+const projectRoutes = require('./routes/projectRoutes');
 const experienceRoutes = require('./routes/experienceRoutes');
-const educationRoutes  = require('./routes/educationRoutes');
-const serviceRoutes    = require('./routes/serviceRoutes');
-const messageRoutes    = require('./routes/messageRoutes');
+const educationRoutes = require('./routes/educationRoutes');
+const serviceRoutes = require('./routes/serviceRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 const publicContactRoutes = require('./routes/publicContactRoutes');
 
 const app = express();
@@ -50,15 +50,15 @@ app.get('/api/cv', (_req, res) => {
 });
 
 // ── API Routes ─────────────────────────────────────────────────────────────────
-app.use('/api/auth',       authRoutes);
-app.use('/api/profile',    profileRoutes);
-app.use('/api/skills',     skillRoutes);
-app.use('/api/projects',   projectRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/skills', skillRoutes);
+app.use('/api/projects', projectRoutes);
 app.use('/api/experience', experienceRoutes);
-app.use('/api/education',  educationRoutes);
-app.use('/api/services',   serviceRoutes);
-app.use('/api/messages',   messageRoutes);
-app.use('/api/contact',    publicContactRoutes);
+app.use('/api/education', educationRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/contact', publicContactRoutes);
 
 // ── 404 + Error handlers ───────────────────────────────────────────────────────
 app.use(notFound);
@@ -69,18 +69,14 @@ const PORT = process.env.PORT || 5000;
 
 async function startServer() {
   try {
-    // 1. Connect to MySQL (creates DB if missing)
     await connectDB();
-    
+
     await syncModels();
 
-    app.listen(PORT, () => {
-      console.log(`\n🚀 Server running on http://localhost:${PORT}`);
-      console.log(`📊 API health: http://localhost:${PORT}/api/health`);
-      console.log(`🔑 Admin login → POST http://localhost:${PORT}/api/auth/login`);
-      console.log(`   Email:    ${process.env.ADMIN_EMAIL || 'admin@kavin.dev'}`);
-      console.log(`   Password: ${process.env.ADMIN_PASSWORD || 'Admin@123'}\n`);
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on port ${PORT}`);
     });
+
   } catch (error) {
     console.error('❌ Failed to start server:', error);
     process.exit(1);
